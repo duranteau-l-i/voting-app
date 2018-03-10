@@ -1,0 +1,14 @@
+<div class="container" *ngIf="logged">
+  <h2>Polling</h2>
+  <br>
+  <form class="text-center" #polling="ngForm" (ngSubmit)="onSubmit(polling.value)">
+    <div class="form-group">
+      <h2>{{poll.question}}</h2>
+      <div class="form-check" *ngFor="let opt of poll.options">
+        <input class="form-check-input" type="radio" name="option" [value]="opt._id" ngModel required #myOption="ngModel">{{opt.option}}
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary" [disabled]="!polling.valid">Submit</button>
+    </div>
+  </form>
+</div>

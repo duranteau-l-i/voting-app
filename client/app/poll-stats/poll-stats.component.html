@@ -1,0 +1,8 @@
+<div class="container">
+  <div *ngIf="!authService.logged" class="float-right">
+    <p routerLink="/login">login to participate</p>
+  </div>
+  <h2>Poll Stats</h2>
+  <br>
+  <google-chart [data]="pieChartData"></google-chart>
+</div>

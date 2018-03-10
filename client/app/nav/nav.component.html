@@ -1,0 +1,12 @@
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+  <h5 class="my-0 mr-md-auto font-weight-normal">Voting App</h5>
+  <nav class="my-2 my-md-0 mr-md-3">
+    <a *ngIf="authService.name" class="p-2 text-white bg-secondary" disable>{{authService.name}}</a>
+    <a class="p-2 text-dark" href="#" routerLink="/">Home</a>
+    <a  class="p-2 text-dark" href="#" routerLink="/polls">Polls</a>
+    <a *ngIf="authService.logged" class="p-2 text-dark" href="#" routerLink="/reset">Reset</a>
+    <a *ngIf="!authService.logged" class="p-2 text-dark" href="#" routerLink="/login">Login</a>
+    <a *ngIf="authService.logged" class="p-2 text-dark" href="#" (click)="authService.logout()">Logout</a>
+  </nav>
+  <a *ngIf="!authService.logged" class="btn btn-outline-primary" href="#" routerLink="/register">Sign up</a>
+</div>

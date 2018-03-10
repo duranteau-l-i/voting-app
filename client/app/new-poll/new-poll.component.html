@@ -1,0 +1,23 @@
+<div class="container" *ngIf="admin">
+  <h2>New Poll</h2>
+  <br>
+  <form class="text-center" (ngSubmit)="onSubmit()" #newPoll="ngForm">
+    <div class="form-group">
+      <label for="question">Name your poll.</label>
+      <input type="text" class="form-control" name="question" id="question" [(ngModel)]="poll.question" required>
+      <br>
+      <label for="options">Options</label>
+      <div class="input-group mb-3" *ngFor="let opt of poll.options">
+        <input type="text" class="form-control" name={{opt.option}} [(ngModel)]="opt.option" required>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" id={{opt.number}} (click)="deleteInputAnswer($event)">X</button>
+        </div>
+      </div>
+      <br>
+      <button type="button" class="btn btn-secondary" (click)="addInputAnswer()">More Options</button>
+      <br>
+      <br>
+      <button type="submit" class="btn btn-primary" [disabled]="!newPoll.form.valid">Submit</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,11 @@
+<div class="container" *ngIf="admin">
+  <h2>My Polls</h2>
+  <br>
+  <div class="card" *ngFor="let poll of polls">
+    <div class="card-body">
+      <p (click)="toStats($event)" id={{poll._id}}>{{poll.question}}
+        <button id={{poll._id}} class="btn btn-danger float-right" (click)="deletePoll($event)">Delete</button>
+      </p>
+    </div>
+  </div>
+</div>
