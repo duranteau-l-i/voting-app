@@ -22,6 +22,7 @@ import { PollStatsComponent } from './poll-stats/poll-stats.component';
 import { PollFormComponent } from './poll-form/poll-form.component';
 
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -33,7 +34,8 @@ const routes = [
   { path: 'my-polls', component: MyPollsComponent },
   { path: 'polls/stats/:id', component: PollStatsComponent },
   { path: 'polls/:id', component: PollFormComponent },
-  { path: 'polls', component: PollsComponent }
+  { path: 'polls', component: PollsComponent },
+  { path: '**',  component: NotFoundComponent }
 ];
 
 @NgModule({
@@ -50,7 +52,8 @@ const routes = [
     MyPollsComponent,
     PollsComponent,
     PollStatsComponent,
-    PollFormComponent
+    PollFormComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

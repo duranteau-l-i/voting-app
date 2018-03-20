@@ -13,7 +13,7 @@ export class PollStatsComponent implements OnInit {
   poll;
   pieChartData;
 
-  constructor(private authService: AuthService, private pollsService: PollsService) {
+  constructor(public authService: AuthService, private pollsService: PollsService) {
    }
 
    ngOnInit() {

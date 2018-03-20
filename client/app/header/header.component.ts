@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
   admin: boolean;
   logged: boolean;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.admin = this.authService.isLogged('admin');

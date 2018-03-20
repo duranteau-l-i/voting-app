@@ -24,11 +24,8 @@ app.use((req, res, next) => {
 });
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-//Static path to dist
-app.use(express.static(path.join(__dirname, '../dist')));
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -36,7 +33,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
+//Static path to dist
+app.use(express.static(path.join(__dirname, '../dist')));
 
 app.use('/', index);
 app.use('/auth', users);
@@ -57,7 +56,8 @@ app.use((err, req, res, next) => {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  // res.render('error');
+  res.sendFile(path.join(__dirname, '../dist/index.html'), err);
 });
 
 module.exports = app;

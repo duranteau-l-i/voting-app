@@ -12,7 +12,7 @@ export class NavComponent implements OnInit {
   logged: boolean;
   name: string;
 
-  constructor(private authService: AuthService) { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit() {
     if (this.authService.isLogged('admin') || this.authService.isLogged('user')) {

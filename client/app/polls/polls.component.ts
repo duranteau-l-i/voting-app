@@ -17,7 +17,7 @@ export class PollsComponent implements OnInit {
   polls: Poll[];
   poll: Poll;
 
-  constructor(private pollsService: PollsService, private router: Router, private authService: AuthService) {}
+  constructor(private pollsService: PollsService, private router: Router, public authService: AuthService) {}
 
   ngOnInit() {
     this.admin = this.authService.isLogged('admin');
