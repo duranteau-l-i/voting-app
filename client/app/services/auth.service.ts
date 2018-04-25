@@ -11,27 +11,26 @@ import { catchError, map, tap } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 
 @Injectable()
 export class AuthService {
-
   AUTH_URL = 'http://localhost:3000/auth';
 
-  logged: boolean;
-  admin: boolean;
+  logged: boolean = false;
+  admin: boolean = false;
   localStorageData = 'data_login';
-  name = '';
+  name: string = '';
   data;
 
-  constructor(private http: HttpClient, private router: Router) { }
-
+  constructor(private http: HttpClient, private router: Router) {}
 
   login(user) {
-    return this.http.post<User>(`${this.AUTH_URL}/login`, user, httpOptions)
+    return this.http
+      .post<User>(`${this.AUTH_URL}/login`, user, httpOptions)
       .subscribe(res => {
-        const data = {_id: res._id, name: res.name, role: res.role} ;
+        const data = { _id: res._id, name: res.name, role: res.role };
         const ls = JSON.stringify(data);
         localStorage.setItem(this.localStorageData, ls);
         this.name = res.name;
@@ -44,13 +43,17 @@ export class AuthService {
       });
   }
 
-  isLogged(status) {
+  isLogged() {
     const ls = localStorage.getItem('data_login');
     if (JSON.parse(ls) !== null) {
       const lsp = JSON.parse(ls);
-      if (lsp.role === status) {
+      this.name = lsp.name;
+      this.logged = true;
+      if (lsp.role === 'admin') {
+        this.admin = true;
         return true;
       }
+      return true;
     }
     return false;
   }
@@ -62,29 +65,30 @@ export class AuthService {
   }
 
   createUser(user) {
-    return this.http.post<User>(`${this.AUTH_URL}/register`, user, httpOptions)
-      .pipe(
-        catchError(this.handleError(`create user`))
-      )
+    return this.http
+      .post<User>(`${this.AUTH_URL}/register`, user, httpOptions)
+      .pipe(catchError(this.handleError(`create user`)))
       .map(res => res);
   }
 
   changePassword(passwords) {
-    const {currentPassword, newPassword} = passwords;
-    const data = {name: this.name, currentPassword: currentPassword, newPassword: newPassword};
-    return this.http.post(`${this.AUTH_URL}/change-password`, data, httpOptions)
-      .pipe(
-        catchError(this.handleError(`change password`))
-      )
+    const { currentPassword, newPassword } = passwords;
+    const data = {
+      name: this.name,
+      currentPassword: currentPassword,
+      newPassword: newPassword,
+    };
+    return this.http
+      .post(`${this.AUTH_URL}/change-password`, data, httpOptions)
+      .pipe(catchError(this.handleError(`change password`)))
       .map(res => res);
   }
 
-  private handleError<T> (operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
       console.log(`${operation} failed: ${error.message}`);
       return of(result as T);
     };
   }
-
 }

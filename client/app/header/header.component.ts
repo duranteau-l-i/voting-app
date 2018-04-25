@@ -5,18 +5,10 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  constructor(public authService: AuthService, private router: Router) {}
 
-  admin: boolean;
-  logged: boolean;
-
-  constructor(public authService: AuthService, private router: Router) { }
-
-  ngOnInit() {
-    this.admin = this.authService.isLogged('admin');
-    this.logged = this.authService.isLogged('user');
-  }
-
+  ngOnInit() {}
 }

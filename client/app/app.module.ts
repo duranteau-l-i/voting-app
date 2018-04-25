@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -24,18 +24,34 @@ import { PollFormComponent } from './poll-form/poll-form.component';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { NotFoundComponent } from './not-found/not-found.component';
 
+import { NgxTrimModule } from 'ngx-trim';
+import { AuthGuard } from './services/auth.guard.service';
+import { AuthAdminGuard } from './services/auth.admin.guard.service';
+
 const routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'reset', component: ResetPasswordComponent },
-  { path: 'new-poll', component: NewPollComponent },
-  { path: 'my-polls', component: MyPollsComponent },
+  {
+    path: 'reset',
+    canActivate: [AuthGuard],
+    component: ResetPasswordComponent,
+  },
+  {
+    path: 'new-poll',
+    canActivate: [AuthAdminGuard],
+    component: NewPollComponent,
+  },
+  {
+    path: 'my-polls',
+    canActivate: [AuthAdminGuard],
+    component: MyPollsComponent,
+  },
   { path: 'polls/stats/:id', component: PollStatsComponent },
-  { path: 'polls/:id', component: PollFormComponent },
+  { path: 'polls/:id', canActivate: [AuthGuard], component: PollFormComponent },
   { path: 'polls', component: PollsComponent },
-  { path: '**',  component: NotFoundComponent }
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
@@ -53,19 +69,18 @@ const routes = [
     PollsComponent,
     PollStatsComponent,
     PollFormComponent,
-    NotFoundComponent
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     Ng2GoogleChartsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    NgxTrimModule,
   ],
-  providers: [
-    AuthService,
-    PollsService
-  ],
-  bootstrap: [AppComponent]
+  providers: [AuthService, PollsService, AuthGuard, AuthAdminGuard],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

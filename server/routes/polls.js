@@ -42,9 +42,13 @@ router.get('/polls/user/:name', (req, res, next) => {
 
 router.post('/new-poll', (req, res, next) => {
   const data = req.body;
-  polls.create(data, (err, result) => {
+  polls.findOneAndUpdate({question: req.body.question} , data, {upsert: true}, (err, result) => {
     if(err) throw err;
-    res.send(result);
+    if (result !== null) {
+      res.json({ success: false });
+    } else {
+      res.send(result);
+    }
   });
 });
 

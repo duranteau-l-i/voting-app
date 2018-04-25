@@ -5,30 +5,23 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-
-  admin: boolean;
-  logged: boolean;
   message: string;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(public authService: AuthService, private router: Router) {}
 
-  ngOnInit() {
-    this.logged = this.authService.isLogged('admin');
-    this.logged = this.authService.isLogged('user');
-  }
+  ngOnInit() {}
 
   onSubmit(value) {
     this.authService.login(value);
     setTimeout(() => {
-      if (this.authService.isLogged('user') === true || this.authService.isLogged('admin') === true) {
+      if (this.authService.isLogged() === true) {
         this.router.navigate(['/polls']);
       } else {
         this.message = 'Failed authentification';
       }
     }, 500);
   }
-
 }

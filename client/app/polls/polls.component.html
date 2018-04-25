@@ -1,12 +1,16 @@
 <div class="container">
-  <div *ngIf="!authService.logged" class="float-right">
-    <p routerLink="/login">login to participate</p>
-  </div>
-  <h2>Polls</h2>
-  <br>
-  <div class="card" *ngFor="let poll of polls">
-    <div class="card-body">
-      <p id={{poll._id}} (click)="toPollId($event)">{{poll.question}}</p>
+    <div *ngIf="!authService.isLogged"
+        class="float-right">
+        <button class="btn btn-secondary"
+            routerLink="/login">login to participate</button>
     </div>
-  </div>
+    <h2>Polls</h2>
+    <br>
+    <div class="card"
+        *ngFor="let poll of polls">
+        <div class="card-body">
+            <p id={{poll._id}}
+                (click)="toPollId($event)">{{poll.question}}</p>
+        </div>
+    </div>
 </div>

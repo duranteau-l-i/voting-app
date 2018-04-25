@@ -3,60 +3,96 @@ import { PollsService } from '../services/polls.service';
 import { Poll } from '../services/poll';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormArray,
+  FormControl,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-new-poll',
   templateUrl: './new-poll.component.html',
-  styleUrls: ['./new-poll.component.css']
+  styleUrls: ['./new-poll.component.css'],
 })
 export class NewPollComponent implements OnInit {
-
   admin;
   name: string;
+  number: number = 2;
+  message: string;
 
-  poll: any = {
-    options: [
-      {
-        number: 1,
-        option: 'Answer 1',
-        poll: 0,
-        voters: []
-      },
-      {
-        number: 2,
-        option: 'Answer 2',
-        poll: 0,
-        voters: []
-      }
-    ],
-    question: 'Your question',
-    user: '',
-  };
+  pollForm: FormGroup;
 
-  constructor(private pollsService: PollsService, private authService: AuthService, private router: Router) { }
+  constructor(
+    private pollsService: PollsService,
+    public authService: AuthService,
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit() {
-    this.admin = this.authService.isLogged('admin');
-    const ls = JSON.parse(localStorage.getItem('data_login'));
-    this.poll.user = ls.name;
-    console.log(this.poll.user);
+    this.name = this.authService.name;
+    this.initForm();
+  }
+
+  initForm() {
+    this.pollForm = this.formBuilder.group({
+      question: [
+        '',
+        [Validators.required, Validators.pattern('[A-Za-z0-9_]{4,}')],
+      ],
+      options: this.formBuilder.array([
+        new FormControl('', [
+          Validators.required,
+          Validators.pattern('[A-Za-z0-9_]{2,}'),
+        ]),
+        new FormControl('', [
+          Validators.required,
+          Validators.pattern('[A-Za-z0-9_]{2,}'),
+        ]),
+      ]),
+    });
+  }
+
+  getOptions(): FormArray {
+    return this.pollForm.get('options') as FormArray;
   }
 
   addInputAnswer() {
-    const number: number = this.poll.options.length + 1;
-    this.poll.options.push({number: number, option: 'Option', poll: 0});
+    const newOptionsControl = this.formBuilder.control('', [
+      Validators.required,
+      Validators.pattern('[A-Za-z0-9_]{2,}'),
+    ]);
+    this.getOptions().push(newOptionsControl);
+  }
+
+  onSubmit() {
+    const formValue = this.pollForm.value;
+    const opt = formValue['options'].map((element, index) => {
+      return { number: index + 1, option: element, poll: 0, voters: [] };
+    });
+    const newPoll = {
+      question: formValue['question'],
+      options: opt,
+      user: this.name,
+    };
+
+    this.pollsService.addPoll(newPoll).subscribe(res => {
+      if (res === null) {
+        setTimeout(() => {
+          this.router.navigate(['/my-polls']);
+        }, 500);
+      } else {
+        this.message = 'Poll al ready exists !';
+      }
+    });
   }
 
   deleteInputAnswer(event) {
-    const number = event.target.id  - 1;
-    this.poll.options.splice(number, 1);
+    const number = event;
+    if (this.getOptions().controls.length > 2) {
+      this.getOptions().controls.splice(number, 1);
+    }
   }
-
-  onSubmit(): void {
-    this.pollsService.addPoll(this.poll);
-    setTimeout(() => {
-      this.router.navigate(['/my-polls']);
-    }, 500);
-  }
-
 }

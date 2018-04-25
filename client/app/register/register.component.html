@@ -1,19 +1,46 @@
-<div class="container" *ngIf="!logged">
-  <h2>Registration</h2>
-  <br>
-  <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm.value)">
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" class="form-control" ngModel name="name" placeholder="Name " required>
-      <br>
-      <label for="email">Email</label>
-      <input type="email" class="form-control" ngModel email name="email" placeholder="Email" required>
-      <br>
-      <label for="password">Password</label>
-      <input type="password" class="form-control" ngModel name="password" placeholder="Password" required>
-      <br>
-      <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Sign up</button>
-    </div>
-  </form>
-  <div *ngIf="message" class="alert alert-warning" role="alert">{{message}}</div>
+<div class="container"
+    *ngIf="!this.authService.isLogged()">
+    <h2>Registration</h2>
+    <br>
+    <form #registerForm="ngForm"
+        (ngSubmit)="onSubmit(registerForm.value)">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text"
+                class="form-control"
+                ngModel
+                name="name"
+                placeholder="Name"
+                pattern="[A-Za-z0-9_]{3,}"
+                placeholder="Option (3 characters minimum)"
+                required>
+            <br>
+            <label for="email">Email</label>
+            <input type="email"
+                class="form-control"
+                ngModel
+                email
+                name="email"
+                placeholder="Email"
+                pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
+                required>
+            <br>
+            <label for="password">Password</label>
+            <input type="password"
+                class="form-control"
+                ngModel
+                name="password"
+                placeholder="Password"
+                pattern="[A-Za-z0-9_!@#\$%\^&\*]{6,}"
+                placeholder="Option (6 characters minimum)"
+                required>
+            <br>
+            <button type="submit"
+                class="btn btn-primary"
+                [disabled]="registerForm.invalid">Sign up</button>
+        </div>
+    </form>
+    <div *ngIf="message"
+        class="alert alert-warning"
+        role="alert">{{message}}</div>
 </div>

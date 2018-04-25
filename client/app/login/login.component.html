@@ -1,39 +1,51 @@
-<div class="container" *ngIf="!logged">
-  <h2>Login</h2>
-  <br>
-  <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">
-    <div class="form-group">
-      <label for="email">Name</label>
-      <input type="text" class="form-control" name="name" id="name" ngModel placeholder="Your name" required>
-      <br>
-      <label for="password">Password</label>
-      <input type="password" class="form-control" name="password" id="password" ngModel placeholder="Your Password" required>
-      <br>
-      <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
-    </div>
-  </form>
-  <div *ngIf="message" class="alert alert-warning" role="alert">{{message}}</div>
+<div class="container"
+    *ngIf="!authService.logged">
+    <h2>Login</h2>
+    <br>
+    <form #loginForm="ngForm"
+        (ngSubmit)="onSubmit(loginForm.value)">
+        <div class="form-group">
+            <label for="email">Name</label>
+            <input type="text"
+                class="form-control"
+                name="name"
+                id="name"
+                ngModel
+                placeholder="Your name"
+                pattern="[A-Za-z0-9_]{3,}"
+                required>
+            <br>
+            <label for="password">Password</label>
+            <input type="password"
+                class="form-control"
+                name="password"
+                id="password"
+                ngModel
+                placeholder="Your Password"
+                pattern="[A-Za-z0-9_!@#\$%\^&\*]{6,}"
+                required>
+            <br>
+            <button type="submit"
+                class="btn btn-primary"
+                [disabled]="loginForm.invalid">Login</button>
+        </div>
+    </form>
+    <div *ngIf="message"
+        class="alert alert-warning"
+        role="alert">{{message}}</div>
 </div>
 <div class="px-3 pt-md-3 pb-md-4 mx-auto text-center">
-  <p class="lead">Use users defaults or create one (role user)</p>
+    <p class="lead">Create account (role user) or use admin account for create new poll</p>
 </div>
 <div class="container text-left">
-  <ul class="list-group">
-    <li class="list-group-item">
-      <b>Name</b> admin1 /
-      <b>Password</b> admin1
-    </li>
-    <li class="list-group-item">
-      <b>Name</b> admin2 /
-      <b>Password</b> admin2
-    </li>
-    <li class="list-group-item">
-      <b>Name</b> user1 /
-      <b>Password</b> 123
-    </li>
-    <li class="list-group-item">
-      <b>Name</b> user2 /
-      <b>Password</b> 123
-    </li>
-  </ul>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <b>Name</b> admin1 /
+            <b>Password</b> admin1
+        </li>
+        <li class="list-group-item">
+            <b>Name</b> admin2 /
+            <b>Password</b> admin2
+        </li>
+    </ul>
 </div>

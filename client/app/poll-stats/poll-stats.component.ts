@@ -4,44 +4,41 @@ import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-poll-stats',
   templateUrl: './poll-stats.component.html',
-  styleUrls: ['./poll-stats.component.css']
+  styleUrls: ['./poll-stats.component.css'],
 })
 export class PollStatsComponent implements OnInit {
-
-  admin: boolean;
-  logged: boolean;
   poll;
   pieChartData;
 
-  constructor(public authService: AuthService, private pollsService: PollsService) {
-   }
+  constructor(
+    public authService: AuthService,
+    private pollsService: PollsService
+  ) {}
 
-   ngOnInit() {
-     if (this.authService.isLogged('admin') || this.authService.isLogged('user')) {
-       this.logged = true;
-     }
+  ngOnInit() {
     this.getPoll();
   }
 
   getPoll() {
     const id = this.pollsService.id;
-    this.pollsService.getPollById(id)
-      .subscribe(p => {
-        const poll = p as any;
-        this.pieChartData = {
-          chartType: 'PieChart',
-          dataTable: [['Task', 'Hours per Day']],
-          options: {
-            'legend': 'left',
-            'title': poll.question,
-            'is3D': true,
-            'width': 800,
-            'height': 600}
-        };
-        poll.options.forEach(element => {
-          this.pieChartData.dataTable.push([element.option, element.poll]);
-        });
+    this.pollsService.getPollById(id).subscribe(p => {
+      const poll = p as any;
+      this.pieChartData = {
+        chartType: 'PieChart',
+        dataTable: [['Task', 'Hours per Day']],
+        options: {
+          title: poll.question,
+          titleTextStyle: {
+            fontSize: 18,
+          },
+          is3D: true,
+          width: 350,
+          height: 300,
+        },
+      };
+      poll.options.forEach(element => {
+        this.pieChartData.dataTable.push([element.option, element.poll]);
       });
+    });
   }
-
 }

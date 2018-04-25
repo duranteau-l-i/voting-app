@@ -1,14 +1,21 @@
-<div class="jumbotron text-center" *ngIf="authService.admin">
-  <h1 class="display-4">Dashboard</h1>
-  <p class="lead">What would you like to do today ?</p>
-  <hr class="my-4">
-  <p class="lead">
-    <a class="btn btn-success btn-lg" href="" routerLink="/new-poll" role="button">New Poll</a>
-    <a class="btn btn-primary btn-lg" href="#" routerLink="/my-polls" role="button">My Polls</a>
-  </p>
+<div class="jumbotron text-center"
+    *ngIf="authService.admin">
+    <h1 class="display-4">Dashboard</h1>
+    <p class="lead">What would you like to do today ?</p>
+    <hr class="my-4">
+    <p class="lead">
+        <a class="btn btn-success btn-lg"
+            href=""
+            routerLink="/new-poll"
+            role="button">New Poll</a>
+        <a class="btn btn-primary btn-lg"
+            href="#"
+            routerLink="/my-polls"
+            role="button">My Polls</a>
+    </p>
 </div>
-<div class="jumbotron text-center" *ngIf="!authService.admin">
-  <h1 class="display-4">VotePlex</h1>
-  <p class="lead">Create a custom polls with live results.</p>
-
+<div class="jumbotron text-center"
+    *ngIf="!authService.admin">
+    <h1 class="display-4">VotePlex</h1>
+    <p class="lead">Create custom polls with live results.</p>
 </div>
