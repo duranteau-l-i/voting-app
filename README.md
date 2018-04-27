@@ -1,27 +1,28 @@
-# VotingApp
+# VotingApp / FreeCodeCamp Project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.7.
+This project is part of the backend section: Dynamic Web Application Projects.
 
-## Development server
+The goal is to create an application with these
+[instructions](https://www.freecodecamp.org/challenges/build-a-voting-app)
+and to follow this [example](https://fcc-voting-arthow4n.herokuapp.com/polls).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+##I have made some improvements to it.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1.  First of all the application was realized with node.js and express.js for the backend part.
+    Angular with angle-cli and bootstrap for the frontend part.
 
-## Build
+2.  The offline user can see the list of polls and click to view statistics.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+3.  Only an administrator can create a poll.
+    He can see the list of polls he has created and delete the one he no longer wants.
+    He cannot participate in a survey, but only see the statistics.
 
-## Running unit tests
+4.  The logged-in user can participate in a survey, but only once. If he clicks again, he will only be able to view the statistics.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+5.  Both administrator and user can reset their password.
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+[Heroku link](https://id-votingapp.herokuapp.com/home)
