@@ -3,14 +3,16 @@ import { PollsService } from '../services/polls.service';
 import { Poll } from '../services/poll';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-polls',
   templateUrl: './polls.component.html',
-  styleUrls: ['./polls.component.css'],
+  styleUrls: ['./polls.component.css']
 })
 export class PollsComponent implements OnInit {
   polls: Poll[];
+  pollsSubscription: Subscription;
   poll: Poll;
 
   constructor(
@@ -20,12 +22,9 @@ export class PollsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.listPolls();
-  }
-
-  listPolls(): void {
-    this.pollsService.getPolls().subscribe(data => {
-      this.polls = data as any;
+    this.pollsService.getPolls();
+    this.pollsSubscription = this.pollsService.pollsSubject.subscribe(poll => {
+      this.polls = poll;
     });
   }
 

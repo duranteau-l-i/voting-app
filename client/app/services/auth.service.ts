@@ -11,17 +11,17 @@ import { catchError, map, tap } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable()
 export class AuthService {
   AUTH_URL = 'http://localhost:3000/auth';
 
-  logged: boolean = false;
-  admin: boolean = false;
+  logged = false;
+  admin = false;
   localStorageData = 'data_login';
-  name: string = '';
+  name = '';
   data;
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -76,7 +76,7 @@ export class AuthService {
     const data = {
       name: this.name,
       currentPassword: currentPassword,
-      newPassword: newPassword,
+      newPassword: newPassword
     };
     return this.http
       .post(`${this.AUTH_URL}/change-password`, data, httpOptions)

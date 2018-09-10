@@ -7,24 +7,33 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Poll } from './poll';
 import { AuthService } from './auth.service';
+import { Subject } from 'rxjs/Subject';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable()
 export class PollsService {
   private API_URL = 'http://localhost:3000/api';
   polls;
+  pollsSubject = new Subject<Poll[]>();
   id;
+
+  emitPolls() {
+    this.pollsSubject.next(this.polls.slice());
+  }
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   getPolls() {
     return this.http
       .get(`${this.API_URL}/polls`)
-      .map(res => res)
-      .pipe(catchError(this.handleError('getPolls', [])));
+      .pipe(catchError(this.handleError('getPolls', [])))
+      .subscribe(data => {
+        this.polls = data as any;
+        this.emitPolls();
+      });
   }
 
   getPollById(id) {
