@@ -12,9 +12,7 @@ const polls = require('./routes/polls');
 
 const mongoose = require('mongoose');
 const db = process.env.MONGODB;
-mongoose.connect(
-  'mongodb://ibrahim:votingapp-db@ds151348.mlab.com:51348/votingapp'
-);
+mongoose.connect(db);
 
 const app = express();
 
