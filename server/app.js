@@ -7,14 +7,15 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const index = require('./routes/index');
-const users = require('./routes/users');
-const polls = require('./routes/polls');
+const userRoute = require('./routes/user');
+const pollRoute = require('./routes/poll');
 
 const mongoose = require('mongoose');
 const db = process.env.MONGODB;
-mongoose.connect(
-  'mongodb://ibrahim:votingapp-db@ds151348.mlab.com:51348/votingapp'
-);
+mongoose.connect('mongodb://ibrahim:votingapp-db@ds151348.mlab.com:51348/votingapp', {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+});
 
 const app = express();
 
@@ -34,8 +35,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/', index);
-app.use('/auth', users);
-app.use('/api', polls);
+app.use('/auth', userRoute);
+app.use('/api', pollRoute);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

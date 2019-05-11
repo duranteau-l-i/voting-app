@@ -1,4 +1,4 @@
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 
 var pollSchema = mongoose.Schema({
   question: String,
@@ -6,11 +6,11 @@ var pollSchema = mongoose.Schema({
     {
       number: Number,
       option: String,
-      poll: Number
-    }
+      poll: Number,
+    },
   ],
   user: String,
-  voters: [String]
+  voters: [String],
 });
 
-module.exports = mongoose.model("polls", pollSchema);
+module.exports = mongoose.model('Poll', pollSchema);
