@@ -1,55 +1,43 @@
-<div class="container"
-    *ngIf="authService.admin">
-    <h2>New Poll</h2>
-    <br>
-    <form class="text-center"
-        (ngSubmit)="onSubmit()"
-        [formGroup]="pollForm">
-        <div class="form-group">
-            <label for="question">Name your poll.</label>
-            <input type="text"
-                class="form-control"
-                name="question"
-                id="question"
-                placeholder="Your question (4 characters minimum)"
-                required
-                ngxTrim="keyup"
-                formControlName="question">
-            <br>
-            <div formArrayName="options"
-                class="form-array">
-                <label for="options">Options</label>
-                <div class="input-group mb-3"
-                    *ngFor="let opt of getOptions().controls; let i = index">
-                    <input type="text"
-                        class="form-control"
-                        placeholder="Option (2 characters minimum)"
-                        required
-                        minlength="2"
-                        ngxTrim="keyup"
-                        id="i"
-                        [formControlName]="i">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary"
-                            type="button"
-                            id="i"
-                            (click)="deleteInputAnswer(i)">X</button>
-                    </div>
-                </div>
-            </div>
-
-            <br>
-            <button type="button"
-                class="btn btn-secondary"
-                (click)="addInputAnswer()">More Options</button>
-            <br>
-            <br>
-            <button type="submit"
-                class="btn btn-primary"
-                [disabled]="pollForm.invalid">Submit</button>
+<div class="container" *ngIf="authService.admin">
+  <h2>New Poll</h2>
+  <br />
+  <form class="text-center" (ngSubmit)="onSubmit()" [formGroup]="pollForm">
+    <div class="form-group">
+      <label for="question">Name your poll.</label>
+      <input
+        type="text"
+        class="form-control"
+        name="question"
+        id="question"
+        placeholder="Your question (4 characters minimum)"
+        required
+        formControlName="question"
+      />
+      <br />
+      <div formArrayName="options" class="form-array">
+        <label for="options">Options</label>
+        <div class="input-group mb-3" *ngFor="let opt of getOptions().controls; let i = index">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Option (2 characters minimum)"
+            required
+            minlength="2"
+            id="i"
+            [formControlName]="i"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="i" (click)="deleteInputAnswer(i)">X</button>
+          </div>
         </div>
-    </form>
-    <div *ngIf="message"
-        class="alert alert-warning"
-        role="alert">{{message}}</div>
+      </div>
+
+      <br />
+      <button type="button" class="btn btn-secondary" (click)="addInputAnswer()">More Options</button>
+      <br />
+      <br />
+      <button type="submit" class="btn btn-primary" [disabled]="pollForm.invalid">Submit</button>
+    </div>
+  </form>
+  <div *ngIf="message" class="alert alert-warning" role="alert">{{ message }}</div>
 </div>

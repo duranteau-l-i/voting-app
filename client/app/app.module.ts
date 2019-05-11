@@ -24,7 +24,6 @@ import { PollFormComponent } from './poll-form/poll-form.component';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { NotFoundComponent } from './not-found/not-found.component';
 
-import { NgxTrimModule } from 'ngx-trim';
 import { AuthGuard } from './services/auth.guard.service';
 import { AuthAdminGuard } from './services/auth.admin.guard.service';
 
@@ -78,7 +77,6 @@ const routes = [
     HttpClientModule,
     Ng2GoogleChartsModule,
     RouterModule.forRoot(routes),
-    NgxTrimModule,
   ],
   providers: [AuthService, PollsService, AuthGuard, AuthAdminGuard],
   bootstrap: [AppComponent],
