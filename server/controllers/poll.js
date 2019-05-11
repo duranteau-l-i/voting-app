@@ -53,13 +53,16 @@ exports.createPoll = (req, res, next) => {
 };
 
 exports.polling = (req, res, next) => {
+  const id = req.params.id;
+  const user = req.params.user;
+
   Poll.update(
-    { 'options._id': req.params.id },
+    { 'options._id': id },
     {
       $inc: {
         'options.$.poll': 1,
       },
-      $push: { voters: req.params.user },
+      $push: { voters: user },
     }
   )
     .then(() => {
